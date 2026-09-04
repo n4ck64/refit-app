@@ -1,7 +1,7 @@
 -- Seeds the six synthetic test users behind the dev user-switcher, and the
 -- profile for user 1 used by the persona-tailoring demo.
--- Run AFTER exercise_schema.sql and migrations/003_user_profile.sql.
---   psql -d exercise_database -f data/seed_users.sql
+-- Run AFTER db/schema.sql.
+--   psql -d exercise_database -f db/seed_users.sql
 
 INSERT INTO "user" (user_id, username, full_name, email, gender, date_of_birth) VALUES
   (1, 'swinchester', 'Sam Winchester', 'sam.winchester@example.com', 'M', '1984-03-15'),

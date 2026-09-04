@@ -34,7 +34,12 @@ with open('data/Exercises-Exercises.csv', 'r') as f:
                  description   = EXCLUDED.description,
                  type          = EXCLUDED.type,
                  difficulty    = EXCLUDED.difficulty,
-                 equipment     = EXCLUDED.equipment""",
+                 equipment     = EXCLUDED.equipment,
+                 -- drop the vector when the embedded text changed, so a re-run of
+                 -- generate_embeddings.py picks up exactly the rows that moved
+                 embedding     = CASE WHEN exercises.description   IS DISTINCT FROM EXCLUDED.description
+                                        OR exercises.exercise_name IS DISTINCT FROM EXCLUDED.exercise_name
+                                      THEN NULL ELSE exercises.embedding END""",
             (
                 int(row['exercise_id']),
                 row['exercise_name'].strip(),

@@ -49,11 +49,8 @@ It works without a GPU but it is slow, since one message is five or more model c
 **Database.**
 
     createdb exercise_database
-    psql -d exercise_database -f exercise_schema.sql
-    psql -d exercise_database -f migrations/001_plan_persistence.sql
-    psql -d exercise_database -f migrations/002_nutrition_log.sql
-    psql -d exercise_database -f migrations/003_user_profile.sql
-    psql -d exercise_database -f data/seed_users.sql
+    psql -d exercise_database -f db/schema.sql
+    psql -d exercise_database -f db/seed_users.sql
     python data/import_data.py
     python data/generate_embeddings.py
 
@@ -108,7 +105,7 @@ instrumentation for the ablation and is not in the shipped pipeline.
 ## Where things are
 
     main.py                  the API endpoints
-    pipelines.py             the chat, video, nutrition and plan pipelines
+    pipelines/               the chat, video, nutrition and plan pipelines
     classification.py        intent and muscle classifiers
     retrieval.py             reads from Postgres
     user_data.py             writes to Postgres
@@ -116,7 +113,9 @@ instrumentation for the ablation and is not in the shipped pipeline.
     prompts_and_schemas.py   every prompt and schema
     vision.py                photos and videos
     memory.py                conversation state
-    frontend/                   the React frontend
+    db/                      schema and seed data
+    data/                    source CSVs and the import scripts
+    frontend/                the React frontend
 
 ## Credit
 
