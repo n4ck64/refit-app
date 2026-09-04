@@ -1,0 +1,30 @@
+muscle_id,muscle_name
+101,Biceps
+102,Triceps
+103,Forearm flexors
+104,Forearm extensors
+201,Anterior deltoid
+202,Lateral deltoid
+203,Posterior deltoid
+204,Rotator cuff muscles
+301,Pectoralis major
+302,Pectoralis minor
+401,Upper trapezius
+402,Middle trapezius
+403,Lower trapezius
+404,Latissimus dorsi
+405,Rhomboids
+406,Levator scapulae 
+407,Erector spinae
+501,Rectus abdominis
+502,Obliques
+503,Transversus abdominis
+601,Gluteus maximus
+602,Gluteus medius
+603,Gluteus minimus
+701,Quadriceps
+702,Hamstrings
+703,Abductors
+801,Calves
+802,Shins
+803,Peroneals

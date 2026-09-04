@@ -1,0 +1,21 @@
+*.gguf
+.env
+.env.*
+*.key
+__pycache__/
+*.pyc
+LITERATURE FOR MSC/
+jupyter_testing_ground.ipynb
+refit.log
+*.pdf
+docs/encryption-design-note.md
+.claude/launch.json
+paper/refit.tex
+paper/IEEEtran.cls
+paper/.gitignore
+evaluation/seed_user.sql
+evaluation/seed_users.sql
+*.mov
+node_modules/
+test_images/
+video_submission/

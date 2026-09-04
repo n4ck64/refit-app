@@ -1,0 +1,22 @@
+# ReFit backend dependencies.
+# Pinned to the versions the app is developed and tested against.
+# Install with:  pip install -r requirements.txt
+
+# --- Web API ---
+fastapi==0.136.3
+uvicorn==0.49.0
+python-multipart==0.0.32      # required for file uploads (UploadFile/File)
+pydantic==2.13.4
+
+# --- LLM + database ---
+ollama==0.6.2
+psycopg2-binary==2.9.12       # binary wheel: no local pg_config/build tools needed
+
+# --- Vision (pose/image analysis in vision.py) ---
+mediapipe==0.10.9
+opencv-python==4.13.0.92
+numpy==1.26.4                 # <2: mediapipe 0.10.9 is built against the numpy 1.x ABI
+
+# --- Data-import scripts in data/ (optional: only to rebuild the DB from source) ---
+pandas==3.0.2
+openpyxl==3.1.5
