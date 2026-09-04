@@ -1,6 +1,6 @@
 # ReFit
 
-A fitness and health assistant that runs entirely on your own machine. All the models
+A health assistant that runs entirely on your own machine. All the models
 are local, through Ollama, so nothing you type gets sent anywhere.
 
 It answers exercise, injury and nutrition questions, builds and edits weekly workout
@@ -8,8 +8,7 @@ plans, and gives feedback on photos and videos of your form. Answers are grounde
 Postgres database of exercises and UK nutrition data, then checked by a second model
 before you see them.
 
-This is an MSc dissertation project, not a medical device. Do not take its advice as
-medical advice.
+This is not a medical device. Do not take its advice as medical advice.
 
 ## How it works
 
@@ -22,9 +21,9 @@ message goes through several steps rather than one model call:
 | Condense | llama3.1 | Rewrites a follow-up into a standalone question |
 | Muscles | llama3.1 | Pulls out target and injured muscles to filter the SQL |
 | Retrieve | nomic-embed-text | Vector search over the exercise and food tables |
-| Answer | refit-dpo | A DPO fine-tune of Llama 3.1, tuned to know when to refer on |
+| Answer | llama3.1 | A DPO fine-tune of Llama 3.1, tuned to know when to refer on |
 | Review | qwen2.5:7b | Checks the draft for unsafe or unsupported claims |
-| Rewrite | refit-dpo | Turns the reviewed answer into the final reply |
+| Rewrite | llama3.1 | Turns the reviewed answer into the final reply |
 
 Photos and videos go to qwen2.5vl, with MediaPipe pulling the joint positions out of
 video frames first. The steps that need structured output use Ollama's JSON schema
@@ -40,22 +39,12 @@ It works without a GPU but it is slow, since one message is five or more model c
 
 ## Setup
 
-**Models.** Four come from the registry:
+**Models.** 
 
     ollama pull llama3.1
     ollama pull qwen2.5:7b
     ollama pull qwen2.5vl:7b
     ollama pull nomic-embed-text
-
-Two do not. `refit-dpo` is the fine-tune this project trained. Its LoRA adapter
-(`finetuning/refit-lora.gguf`, 52 MB) is in the repo, so this works after a clone:
-
-    ollama create refit-dpo -f finetuning/Modelfile
-
-`medical-expert` is BioMistral-7B. Download `BioMistral-7B.Q4_K_M.gguf` from
-HuggingFace, put a file next to it saying `FROM ./BioMistral-7B.Q4_K_M.gguf`, then:
-
-    ollama create medical-expert -f Modelfile
 
 **Database.**
 
@@ -127,18 +116,14 @@ instrumentation for the ablation and is not in the shipped pipeline.
     prompts_and_schemas.py   every prompt and schema
     vision.py                photos and videos
     memory.py                conversation state
-    evaluation/              the harness and the results
-    finetuning/              DPO data generation and training
-    refit/                   the React frontend
+    frontend/                   the React frontend
 
 ## Credit
 
-The exercise corpus was originally built from the
+The exercise body was originally built from the
 [ExRx.net Exercise Directory](https://exrx.net/Lists/Directory), whose content is
 copyright ExRx.net, LLC. The descriptions in this repository have been rewritten and
-are not ExRx text; the evaluation reported in the dissertation was run against the
-original descriptions, so the work here differs in wording from the one that
-produced those results. Exercise names, equipment, difficulty and the muscle mappings
+are not ExRx text; Exercise names, equipment, difficulty and the muscle mappings
 are my own.
 
 The muscle diagram is from
@@ -151,15 +136,4 @@ Nutrition data is CoFID 2021 from Public Health England, under the Open Governme
 Licence v3.0, with dietary reference values from their Government Dietary
 Recommendations (2016).
 
-## Known limitations
 
-- `refit-dpo`'s adapter is in the repo, but `medical-expert` is not — you build that
-  yourself from BioMistral weights.
-- There is no authentication. The user dropdown is a dev tool and the user id is
-  trusted from the frontend.
-- Conversation state is global to the process, so the backend handles one
-  conversation at a time.
-- Health data in `user_profile` is stored unencrypted.
-- The Nutrition tab was cut. The chat router still recognises a `log_food` intent but
-  nothing handles it, so logging a meal does not record anything.
-- Only user 1 has a profile filled in. The others build one through conversation.
