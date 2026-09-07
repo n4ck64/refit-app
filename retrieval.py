@@ -45,7 +45,8 @@ def retrieve_exercises(query, top_k=3, target_muscle_id=None, injured_muscle_id=
 
     if injured_muscle_id:
         conditions.append("""exercise_id NOT IN (
-            SELECT exercise_id FROM muscles_exercised WHERE muscle_id = ANY(%s))""")
+            SELECT exercise_id FROM muscles_exercised
+            WHERE muscle_id = ANY(%s) AND role = 'Primary')""")
         params.append(injured_muscle_id)
 
     where = f"WHERE {' AND '.join(conditions)}" if conditions else ""

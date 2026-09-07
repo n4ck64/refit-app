@@ -70,8 +70,8 @@ function Chat({ goToPlans, userId }: {
     }, [])
 
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-    }, [messages])   // runs every time messages changes
+        bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
+    }, [messages])
 
     // switching the dev user resets backend conversational state (see
     // run_chat_pipeline), so clear the visible transcript to match — otherwise

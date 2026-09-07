@@ -2,7 +2,15 @@ body {
     background-color: rgb(255, 255, 232);
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow: hidden;
+}
+
+/* the app fills the viewport and never scrolls itself, so the only thing that
+   scrolls is #chat-window and the sidebar/input bar stay put */
+#root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 * {
@@ -21,6 +29,7 @@ h1 {
     width: 250px;
     max-width: none;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 @keyframes pulse {
@@ -50,14 +59,12 @@ h1 {
     margin: 0;
     margin-top: 0;
     margin-bottom: 0;
+    flex: 1;
+    min-height: 0;
 }
 
 #sidebar {
     width: 250px;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    align-self: flex-start;
     flex-shrink: 0;
     background-color: lightgrey;
     z-index: 100;
@@ -94,6 +101,7 @@ h1 {
 
 #chat-window {
     flex: 1;
+    min-height: 0;
     margin-left: 16px;
     margin-bottom: 80px;
     overflow-y: auto;
