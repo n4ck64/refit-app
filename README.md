@@ -10,6 +10,28 @@ before you see them.
 
 This is not a medical device. Do not take its advice as medical advice.
 
+## What it looks like
+
+**Exercise advice, grounded in the database.** The user states they have shoulder pain, so the retrieval filters out anything the shoulder drives. Every exercise named is one that was
+actually retrieved, and clicking it opens the muscle map for that lift.
+
+![Exercise advice](docs/exercises.gif)
+
+**Nutrition answers with real numbers.** Macros come from the UK CoFID dataset by vector
+search, not from the model's memory.
+
+![Nutrition](docs/nutrition.gif)
+
+**Weekly plans.** It asks for the goal and training days first, then emits schema-valid JSON,
+which is persisted to Postgres and rendered as an editable week you can tick off.
+
+![Plan building](docs/plan.gif)
+
+**Form check from video.** MediaPipe extracts the joint positions, the motion is described in
+words, and the model critiques it against the lift.
+
+![Form check](docs/video.gif)
+
 ## How it works
 
 The frontend is React, the backend is FastAPI, and the models run in Ollama. A chat
